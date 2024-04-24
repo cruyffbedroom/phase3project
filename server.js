@@ -1,5 +1,7 @@
-import express from 'express';
-import * as path from 'path'; // for handling file paths
+const express = require('express');
+
+// for handling file paths
+const path = require('path');
 
 
 //create express app object and sets port to 4000
