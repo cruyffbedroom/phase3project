@@ -22,7 +22,16 @@ async function dbStartup() {
 //create a getCustomers() method taht calls find() on the "customers" collection and returns the result
 
 async function getCustomers() {
-    return await collection.find().toArray();
+    //wrap mongodb call inside of getCustomers() with try/catch
+    try {
+        const customers = await collection.find().toArray();
+        throw {"message": "an error occured"};
+        //instead of returning customer data directly, return array
+        return [customers, null];
+    } catch (err) {
+        console.log(err.message);
+        return [null, err.message];
+    }
 }
 
 dbStartup();

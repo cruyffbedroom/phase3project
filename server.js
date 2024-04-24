@@ -18,8 +18,15 @@ app.use(express.static(path.join(__dirname, 'public')));
 //retrieves customers from mongodb using the data-access.js getCustomers() method
 
 app.get("/customers", async(req, res) => {
-    const cust = await da.getCustomers();
-    res.send(cust);
+
+    //db.getCustomers() call now returns an array, dereference array into variables cust and err
+    const [cust, err] = await da.getCustomers();
+    if (cust) {
+        res.send(cust);
+    } else {
+        res.status(500);
+        res.send(err);
+    }
 });
 
 
