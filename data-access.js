@@ -25,7 +25,8 @@ async function getCustomers() {
     //wrap mongodb call inside of getCustomers() with try/catch
     try {
         const customers = await collection.find().toArray();
-        throw {"message": "an error occured"};
+        //testing error
+        // throw {"message": "an error occured"};
         //instead of returning customer data directly, return array
         return [customers, null];
     } catch (err) {
