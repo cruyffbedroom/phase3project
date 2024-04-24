@@ -35,7 +35,34 @@ async function getCustomers() {
     }
 }
 
+async function resetCustomers() {
+
+    //creates a variable pointing to ana rray contaning three customer objects
+    let data = [{ "id": 0, "name": "Mary Jackson", "email": "maryj@abc.com", "password": "maryj"},
+                { "id": 1, "name": "Karen Addams", "email": "karena@abc.com", "password": "karena"},
+                { "id": 2, "name": "Scott Ramsey", "email": "scottr@abc.com", "password": "scottr"}];
+
+    try {
+        //deletes all existing records in the customer collection using the collection's deleteMany() method
+        await collection.deleteMany({});
+
+        //adds records from the customer array to the customer collection using the collection's insertMany() method
+        await collection.insertMany(data);
+
+        //gets a count of records in the collection
+        const customers = await collection.find().toArray();
+
+        const message = "data was refreshed. there are now " + customers.length + " customer records";
+
+        //on success return message how many records are now in the collection
+        return [message, null];
+    } catch (err) {
+        console.log(err.message);
+        return [null, err.message];
+    }
+};
+
 dbStartup();
 
 // export the getCustomers() method
-module.exports = { getCustomers };
+module.exports = { getCustomers, resetCustomers };

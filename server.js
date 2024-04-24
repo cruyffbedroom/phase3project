@@ -29,6 +29,18 @@ app.get("/customers", async(req, res) => {
     }
 });
 
+//calls data access layer's "reset customers" method
+app.get("/reset", async(req, res) => {
+    // dereference the array into the variables result and err
+    const [result, err] = await da.resetCustomers();
+    if (result) {
+        res.send(result);
+    } else {
+        res.status(500);
+        res.send(err);
+    }
+});
+
 
 //use app.listen to start the server
 app.listen(PORT, () => {
