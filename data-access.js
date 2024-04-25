@@ -62,7 +62,20 @@ async function resetCustomers() {
     }
 };
 
+//takes newCustomer as a parameter and calls
+
+async function addCustomer(newCustomer) {
+    try {
+        //calls "insertOne" on the customer collection and passes the newCustomer
+        const insertResult = await collection.insertOne(newCustomer);
+        return ["success", insertResult.insertedId, null];
+    } catch (err) {
+        console.log(err.message);
+        return ["fail", null, err.message];
+    }
+}
+
 dbStartup();
 
 // export the getCustomers() method
-module.exports = { getCustomers, resetCustomers };
+module.exports = { getCustomers, resetCustomers, addCustomer };
