@@ -109,8 +109,25 @@ async function updateCustomer(updatedCustomer) {
         return [null, err.message];
     }
 }
+async function deleteCustomerById(id) {
+    try {
+        //calls deleteOne on the customer collection and passes an object with the id as a property. the + sign converts the string to numbet format.
+        const deleteResult = await collection.deleteOne({ "id": +id });
+
+        if (deleteResult.deletedCount === 0) {
+            return [null, "no record deleted"];
+        } else if (deleteResult.deletedCount === 1) {
+            return ["one record deleted", null];
+        } else {
+            return [null, "error deleting records"];
+        }
+    } catch (err) {
+        console.log(err.message);
+        return [null, err.message];
+    }
+}
 
 dbStartup();
 
 // export the getCustomers() method
-module.exports = { getCustomers, resetCustomers, addCustomer, getCustomerById, updateCustomer };
+module.exports = { getCustomers, resetCustomers, addCustomer, getCustomerById, updateCustomer, deleteCustomerById };

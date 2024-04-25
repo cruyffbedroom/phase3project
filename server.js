@@ -106,6 +106,23 @@ app.put('/customers/:id', async(req, res) => {
     // }
 });
 
+app.delete("/customers/:id", async(req, res) => {
+    //gets the id on the url from the request object
+    const id = req.params.id;
+
+    //calls the data access deletecustomerbyid method, passing in the id value
+    const [message, errMessage] = await da.deleteCustomerById(id);
+
+    if (message) {
+        res.send(message);
+
+    } else {
+        res.status(404);
+        res.send(errMessage);
+    }
+
+})
+
 //use app.listen to start the server
 app.listen(PORT, () => {
     console.log(`Your server is running on Port ${PORT} `)
