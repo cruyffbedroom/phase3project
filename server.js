@@ -49,6 +49,20 @@ app.get("/reset", async(req, res) => {
     }
 });
 
+app.get("/customers/:id", async(req, res) => {
+
+    //gets the id on the URL from the request object
+    const id = req.params.id;
+
+    //calls the data access getCustomerById method, passing the id value
+    const [cust, err] = await da.getCustomerById(id);
+    if (cust) {
+        res.send(cust);
+    } else {
+        res.status(404);
+        res.send(err);
+    }
+});
 
 app.post('/customers', async(req, res) => {
     //checks request body, if null then response is 400 and returns text
@@ -66,6 +80,8 @@ app.post('/customers', async(req, res) => {
     }
 
 });
+
+
 
 //use app.listen to start the server
 app.listen(PORT, () => {

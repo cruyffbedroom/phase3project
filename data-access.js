@@ -75,7 +75,23 @@ async function addCustomer(newCustomer) {
     }
 }
 
+async function getCustomerById(id) {
+    try {
+
+        //calls "findone" on the customer collection and passes an object with the id as a property. The + sign converts from string to number format.
+        const customer = await collection.findOne({"id": +id});
+
+        if (!customer) {
+            return [null, "invalid customer number"];
+        } 
+        return [customer, null];
+    } catch (err) {
+        console.log(err.message);
+        return [null, err.message];
+    }
+}
+
 dbStartup();
 
 // export the getCustomers() method
-module.exports = { getCustomers, resetCustomers, addCustomer };
+module.exports = { getCustomers, resetCustomers, addCustomer, getCustomerById };
