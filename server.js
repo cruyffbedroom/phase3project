@@ -81,7 +81,30 @@ app.post('/customers', async(req, res) => {
 
 });
 
+app.put('/customers/:id', async(req, res) => {
 
+    //gets the id parameter from the request object and puts it into id variable
+    const id = req.params.id;
+
+    //gets the request body rom the request object and puts it into the updated Customer variable
+    const updatedCustomer = req.body;
+    console.log(updatedCustomer)
+    // if (updatedCustomer != null || req.body == {}) {
+        // delete updatedCustomer._id;
+
+        const [message, errMessage] = await da.updateCustomer(updatedCustomer);
+
+        if (message) {
+            res.send(message);
+        } else {
+            res.status(400);
+            res.send(errMessage);
+        }
+    // } else {
+    //     res.status(400);
+    //     res.send("missing request body");
+    // }
+});
 
 //use app.listen to start the server
 app.listen(PORT, () => {

@@ -91,7 +91,26 @@ async function getCustomerById(id) {
     }
 }
 
+async function updateCustomer(updatedCustomer) {
+    try {
+        //creates a filter object
+        const filter = { "id": updatedCustomer.id};
+
+        //creates a data set object
+        const setData = { $set: updatedCustomer };
+
+        //calls updateOne on the customer collection and passes the updatedCustomer
+        const updateResult = await collection.updateOne(filter, setData);
+
+        return ["one record updated", null];
+
+    } catch (err) {
+        console.log(err.message);
+        return [null, err.message];
+    }
+}
+
 dbStartup();
 
 // export the getCustomers() method
-module.exports = { getCustomers, resetCustomers, addCustomer, getCustomerById };
+module.exports = { getCustomers, resetCustomers, addCustomer, getCustomerById, updateCustomer };
